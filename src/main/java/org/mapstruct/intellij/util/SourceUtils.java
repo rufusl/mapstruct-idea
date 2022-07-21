@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.mapstruct.intellij.util.MapstructUtil.canDescendIntoType;
 import static org.mapstruct.intellij.util.MapstructUtil.getSourceParameters;
+import static org.mapstruct.intellij.util.MapstructUtil.isRecordSetter;
 import static org.mapstruct.intellij.util.MapstructUtil.publicFields;
 
 /**
@@ -176,6 +177,9 @@ public class SourceUtils {
         ) {
             // boolean getter
             return Introspector.decapitalize( methodName.substring( 2 ) );
+        }
+        else if ( isRecordSetter( method ) ) {
+            return methodName;
         }
         else {
             return null;

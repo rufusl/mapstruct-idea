@@ -6,6 +6,7 @@
 package org.mapstruct.intellij.util;
 
 import java.beans.Introspector;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -554,6 +555,13 @@ public final class MapstructUtil {
      */
     public static boolean isInheritInverseConfiguration(PsiMethod method) {
         return isAnnotated( method, INHERIT_INVERSE_CONFIGURATION, AnnotationUtil.CHECK_TYPE );
+    }
+
+    public static boolean isRecordSetter(PsiMethod method) {
+        PsiClass containingClass = method.getContainingClass();
+        return containingClass != null
+                && containingClass.isRecord()
+                && Arrays.stream( containingClass.getFields() ).anyMatch( f -> f.getName().equals( method.getName() ) );
     }
 
 }

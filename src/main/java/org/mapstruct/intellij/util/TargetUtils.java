@@ -44,6 +44,7 @@ import static com.intellij.codeInsight.AnnotationUtil.getBooleanAttributeValue;
 import static org.mapstruct.intellij.util.MapstructAnnotationUtils.findAllDefinedMappingAnnotations;
 import static org.mapstruct.intellij.util.MapstructUtil.canDescendIntoType;
 import static org.mapstruct.intellij.util.MapstructUtil.isFluentSetter;
+import static org.mapstruct.intellij.util.MapstructUtil.isRecordSetter;
 import static org.mapstruct.intellij.util.MapstructUtil.publicFields;
 
 /**
@@ -298,6 +299,9 @@ public class TargetUtils {
             }
             else if ( methodName.startsWith( "set" ) ) {
                 return Introspector.decapitalize( methodName.substring( 3 ) );
+            }
+            else if ( isRecordSetter( method ) ) {
+                return methodName;
             }
             else {
                 return null;

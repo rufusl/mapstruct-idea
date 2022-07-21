@@ -59,6 +59,9 @@ class MapstructSourceReference extends MapstructBaseReference {
         if ( methods.length == 0 ) {
             methods = psiClass.findMethodsByName( "is" + MapstructUtil.capitalize( value ), true );
         }
+        if ( methods.length == 0 && psiClass.isRecord() ) {
+            methods = psiClass.findMethodsByName( value, false );
+        }
         if ( methods.length > 0 && isPublicNonStatic( methods[0] ) ) {
             return methods[0];
         }
